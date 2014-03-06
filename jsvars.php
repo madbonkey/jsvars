@@ -12,7 +12,15 @@ class Plugin_Jsvars extends Plugin
 	public function dump() {
 
 		// reserve some attributes that wo don't want as js vars
-		$reserved = array('namespace', 'theme_path');
+		$reserved = array(
+			'namespace'
+		);
+
+		// define "magic" keys which hold internal values
+		$specials = array(
+			'theme_path' => $this->template->get_theme_path(),
+			'theme_url' => site_url($this->template->get_theme_path()),
+		);
 
 		// define our formats
 		$html = array(
@@ -22,11 +30,14 @@ class Plugin_Jsvars extends Plugin
 			'namespace' => 'var %s = {%s}',
 		);
 
+		$attributes = $this->attributes();
 		$vars = array();
 
-		foreach ($this->attributes() as $name => $value) {
+		foreach (array_merge($attributes, $specials) as $name => $value) {
 			// skip the reserved vars
 			if(in_array($name, $reserved)) continue;
+
+			$name = $this->_snakeToCamel($name);
 
 			if($this->attribute('namespace')) {
 				// if we want to namespace, use the namespaced format
@@ -58,6 +69,12 @@ class Plugin_Jsvars extends Plugin
 					);
 		}
 
+	}
+
+	private function _snakeToCamel($val) {
+		$val = str_replace(' ', '', ucwords(str_replace('_', ' ', $val)));
+		$val = strtolower(substr($val,0,1)).substr($val,1);
+		return $val;
 	}
 
 }
