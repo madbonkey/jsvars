@@ -13,7 +13,7 @@ class Plugin_Jsvars extends Plugin
 
 		$html = array(
 			'wrap' => '<script>%s</script>',
-			'keyValuePair' => '%s = \'%s\'',
+			'keyValuePair' => 'var %s = \'%s\'',
 		);
 
 		$vars = array();
