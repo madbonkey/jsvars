@@ -26,7 +26,7 @@ class Plugin_Jsvars extends Plugin
 
 		}
 
-		return sprintf($html['wrap'], implode(",\n", $vars);
+		return sprintf($html['wrap'], implode(",\n", $vars));
 
 	}
 
