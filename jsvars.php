@@ -1,11 +1,14 @@
 <?php
 
 /**
-* JSVars
-*/
+ * Plugin_Jsvars
+ */
 class Plugin_Jsvars extends Plugin
 {
-
+	/**
+	 * dumps the attributes on the plugin as [namespaced] js vars
+	 * @return string
+	 */
 	public function dump() {
 
 		// reserve some attributes that wo don't want as js vars
@@ -34,6 +37,8 @@ class Plugin_Jsvars extends Plugin
 			}
 
 		}
+
+		if(count($vars) === 0) return;
 
 		if($this->attribute('namespace')) {
 			// return the namespaced object
