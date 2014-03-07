@@ -31,6 +31,11 @@ class Plugin_Jsvars extends Plugin
 		);
 
 		$attributes = $this->attributes();
+
+		foreach (Events::trigger('jvars_dump', $attributes, 'array') as $event_data) {
+			$attributes = array_merge($attributes, $event_data );
+		}
+
 		$vars = array();
 
 		foreach (array_merge($attributes, $specials) as $name => $value) {
